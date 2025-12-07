@@ -1,0 +1,51 @@
+{
+  "name": "@svelte-simple-form/validators",
+  "version": "0.0.1",
+  "description": "Svelte Simple Form Validators",
+  "homepage": "https://svelte-simple.harryhdt.dev/svelte-simple-form/validation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harryhdt/svelte-simple-form-validators.git"
+  },
+  "keywords": [
+    "svelte-simple-form",
+    "svelte-simple-form-validators",
+    "@svelte-simple-form",
+    "@svelte-simple-form/validators",
+    "standard-schema",
+    "@svelte-simple-form/standard-schema",
+    "@svelte-simple-form/validators/standard-schema"
+  ],
+  "author": "harryhdt",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./standard-schema": {
+      "import": "./dist/standard-schema/index.js",
+      "require": "./dist/standard-schema/index.js",
+      "types": "./dist/standard-schema/index.d.ts"
+    }
+  },
+  "dependencies": {
+    "@standard-schema/spec": "^1.0.0",
+    "@standard-schema/utils": "^0.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "svelte-simple-form": "^0.3.1"
+  }
+}
