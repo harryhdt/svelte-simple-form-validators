@@ -22,7 +22,7 @@ Docs [Standard Schema](https://standardschema.dev/)
 
 ```ts
 import z from "zod";
-import { useForm } from "svelte-simple-form";
+import { useFormControl } from "svelte-simple-form";
 import { standardSchemaValidator } from "@svelte-simple-form/validators/standard-schema";
 
 const schema = z.object({
@@ -31,7 +31,7 @@ const schema = z.object({
   age: z.number().min(10),
 });
 
-const { form } = useForm({
+const { form } = useFormControl({
   initialValues: {
     name: "",
     email: "",
