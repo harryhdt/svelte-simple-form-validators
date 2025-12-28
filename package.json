@@ -1,6 +1,6 @@
 {
   "name": "@svelte-simple-form/validators",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Svelte Simple Form Validators",
   "homepage": "https://github.com/harryhdt/svelte-simple-form-validators",
   "repository": {
@@ -49,6 +49,6 @@
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "svelte-simple-form": "^0.4.0"
+    "svelte-simple-form": "^0.4.4"
   }
 }
