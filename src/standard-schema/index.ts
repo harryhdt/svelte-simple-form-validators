@@ -42,7 +42,8 @@ export function standardSchemaValidator<TInput, TOutput>(
   }
 
   return {
-    async validateForm(form: FormControlContext) {
+    async validateForm(f: unknown) {
+      const form = f as FormControlContext;
       form.setIsValidating(true);
 
       const callId = Symbol();
@@ -66,7 +67,8 @@ export function standardSchemaValidator<TInput, TOutput>(
       return false;
     },
 
-    async validateField(field: any, form: FormControlContext, force = false) {
+    async validateField(field: string, f: unknown, force = false) {
+      const form = f as FormControlContext;
       form.setIsValidating(true);
 
       const callId = Symbol();
@@ -77,7 +79,6 @@ export function standardSchemaValidator<TInput, TOutput>(
       if (latestCall[field] !== callId) return false;
 
       if (!result.issues) {
-        // @ts-ignore
         form.removeError(field);
         return true;
       }
