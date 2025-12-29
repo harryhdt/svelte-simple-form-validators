@@ -4,20 +4,12 @@ import { getDotPath } from "@standard-schema/utils";
 
 interface Options {
   dependencies?: Partial<Record<string, string[]>>;
-  validateAfterTouched?: boolean;
-  validateAfterDirty?: boolean;
 }
 
 export function standardSchemaValidator<TInput, TOutput>(
   schema: StandardSchemaV1<TInput, TOutput>,
-  opts: Options = {}
+  options: Options = {}
 ) {
-  const options: Options = {
-    ...opts,
-    validateAfterTouched: opts.validateAfterTouched ?? true,
-    validateAfterDirty: opts.validateAfterDirty ?? false,
-  };
-
   async function validate(values: any) {
     let result = schema["~standard"].validate(values);
     if (result instanceof Promise) result = await result;
@@ -127,18 +119,7 @@ export function standardSchemaValidator<TInput, TOutput>(
           directErrors.length > 0 || childErrors.allChildMsgs.length > 0;
 
         //
-        // 3. Rules
-        //
-        if (
-          !force &&
-          (options.validateAfterTouched ? !form.touched[fieldKey] : true) &&
-          (options.validateAfterDirty ? !form.dirty[fieldKey] : true) &&
-          !form.errors[fieldKey]
-        ) {
-          continue;
-        }
-        //
-        // 4. Apply fresh errors
+        // 3. Apply fresh errors
         //
         if (hasAnyError) {
           valid = false;
