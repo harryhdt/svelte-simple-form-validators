@@ -52,9 +52,15 @@ export function standardSchemaValidator<TInput, TOutput>(
         form.setError(errKey as any, msgs);
 
         if (errKey.includes(".")) {
-          const parentPath = errKey.split(".").slice(0, -1).join(".");
-          if (!errors[parentPath]) {
-            form.setError(parentPath as any, ["One or more items are invalid"]);
+          const parts = errKey.split(".");
+          while (parts.length > 1) {
+            parts.pop();
+            const parentPath = parts.join(".");
+            if (!errors[parentPath]) {
+              form.setError(parentPath as any, [
+                "One or more items are invalid",
+              ]);
+            }
           }
         }
       }
@@ -98,6 +104,17 @@ export function standardSchemaValidator<TInput, TOutput>(
           }
         }
 
+        if (fieldKey.includes(".")) {
+          const parts = fieldKey.split(".");
+          while (parts.length > 1) {
+            parts.pop();
+            const p = parts.join(".");
+            if (form.errors[p]?.[0] === "One or more items are invalid") {
+              form.removeError(p);
+            }
+          }
+        }
+
         const matching = Object.entries(errors).filter(
           ([errKey]) =>
             errKey === fieldKey || errKey.startsWith(fieldKey + "."),
@@ -121,14 +138,22 @@ export function standardSchemaValidator<TInput, TOutput>(
 
           if (shouldShowError) {
             valid = false;
-            const hasDirectError = matching.some(([k]) => k === fieldKey);
 
             for (const [errKey, msgs] of matching) {
               form.setError(errKey, msgs);
-            }
 
-            if (!hasDirectError) {
-              form.setError(fieldKey, ["One or more items are invalid"]);
+              if (errKey.includes(".")) {
+                const parts = errKey.split(".");
+                while (parts.length > 1) {
+                  parts.pop();
+                  const parentPath = parts.join(".");
+                  if (!errors[parentPath] && !form.errors[parentPath]) {
+                    form.setError(parentPath as any, [
+                      "One or more items are invalid",
+                    ]);
+                  }
+                }
+              }
             }
           } else {
             valid = false;
