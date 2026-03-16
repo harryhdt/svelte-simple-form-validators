@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+---
+
+## [0.0.6] - 2026-03-17
+
+### 🐛 Bug Fixes
+
+- **Recursive Error Bubbling**: Fixed an issue where parent paths (especially in arrays) failed to receive the "One or more items are invalid" label during field-level validation (`validateField`).
+- **Stale Parent Error Cleanup**: Improved cleanup logic to ensure that generic bubbling errors on parent paths are correctly removed when nested children become valid. It now iteratively cleans all parent levels (e.g., `a.b.c` -> `a.b` -> `a`).
+- **Conflict Prevention**: Enhanced bubbling logic to ensure generic "invalid" labels never overwrite specific error messages defined in the schema for parent paths.
+- **Deep Path Synchronization**: Refactored `validateField` to correctly handle the lifecycle of deeply nested paths, ensuring `touched` and `dirty` states are respected while maintaining accurate error mapping.
+
+### ♻️ Internal Changes
+
+- **Iterative Path Traversing**: Implemented a `while` loop strategy for both cleaning and applying parent errors, ensuring reliability for deeply nested structures.
+- **Improved Field Matching**: Optimized how schema issues are filtered and matched against `fieldsToSync` to provide more predictable validation results.
+
+---
+
 ## [0.0.5] - 2026-03-17
 
 ### 🚀 Features
